@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.graduation.domain.User;
 import com.graduation.mapper.UserMapper;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -26,14 +27,20 @@ public class UserService {
 		return mapper.queryUserByPhoneNumber(phoneNumber);
 	}
 
-	
-	public User queryUserByUserId(int userId){
-		User user=mapper.queryUserByUserId(userId);
-		return user;
+	public void updateMyinfoByPhoneNumber(String phoneNumber, String sex, String year, String hair, String face, String job, String education){
+		mapper.updateMyinfoByPhoneNumber(phoneNumber,sex, year, hair, face, job, education);
 	}
-	
-	public void updateNameById(int userId, String userName) {
-		mapper.updateNameById(userId, userName);
+
+	public Map<String, Object> getMyinfoByPhoneNumber(String phoneNumber){
+		return mapper.getMyinfoByPhoneNumber(phoneNumber);
+	}
+
+	public List<Map<String, Object>> getVipInfo(){
+		return mapper.getVipInfo();
+	}
+
+	public Map<String, Object> getUserByUserId(String userId){
+		return mapper.getUserByUserId(userId);
 	}
 
 }

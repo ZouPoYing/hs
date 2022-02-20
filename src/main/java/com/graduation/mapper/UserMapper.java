@@ -2,7 +2,9 @@ package com.graduation.mapper;
 
 import com.graduation.domain.User;
 import org.apache.ibatis.annotations.*;
+import sun.reflect.generics.tree.VoidDescriptor;
 
+import java.util.List;
 import java.util.Map;
 
 @Mapper
@@ -25,41 +27,25 @@ public interface UserMapper {
 			@Result(property = "avatarUrl", column = "avatar_url") })
 	public Map<String, Object> queryUserByPhoneNumber(String phoneNumber);
 
+	@Update("update user set sex=#{sex},year=#{year},hair=#{hair},face=#{face},job=#{job},education=#{education} WHERE phone_number =#{phoneNumber}")
+	public void updateMyinfoByPhoneNumber(String phoneNumber, String sex, String year, String hair, String face, String job, String education);
+
+	@Select("select concat(sex,',',year,',',hair,',',face,',',job,',',education) as info,t.* from (select ifnull(MAX(sex),'男') as sex," +
+			"ifnull(year,'≥70后') as year,ifnull(hair,'短发') as hair,ifnull(face,'椭圆形') as face,ifnull(job,'程序员') as job," +
+			"ifnull(education,'高中及以下') as education from user where phone_number=#{phoneNumber}) t")
+	public Map<String, Object> getMyinfoByPhoneNumber(String phoneNumber);
+
+	@Select("select user_id as userId,nick_name as nickName,user_type as userType,phone_number as phoneNumber," +
+			"avatar_url as avatarUrl from user where user_type='vip'")
+	public List<Map<String, Object>> getVipInfo();
+
 	@Select("select * from user where user_id=#{userId}")
 	@Results({
-            @Result(property = "userId", column = "user_id"),
-			@Result(property = "userName", column = "user_name"),
-			@Result(property = "userPassword", column = "user_password"),
-            @Result(property = "userEmail", column = "user_email"),
-            @Result(property = "userPicHead", column = "user_pic_head") })
-	public User queryUserByUserId(int userId);
-	
-	@Select("select * from user where user_email=#{email}")
-	@Results({
-            @Result(property = "userId", column = "user_id"),
-			@Result(property = "userName", column = "user_name"),
-			@Result(property = "userPassword", column = "user_password"),
-            @Result(property = "userEmail", column = "user_email"),
-            @Result(property = "userPicHead", column = "user_pic_head") })
-	public User queryUserByEmail(String email);
-	
-//	@Insert("insert into user (user_password, user_email) values (#{password} ,#{email})")
-//	@Options(useGeneratedKeys=true)
-//	void insertUser(@Param("email") String email,@Param("password") String password);
-	
-	@Select("select * from user where user_email=#{email} and user_password=#{password}")
-	@Results({
-            @Result(property = "userId", column = "user_id"),
-			@Result(property = "userName", column = "user_name"),
-			@Result(property = "userPassword", column = "user_password"),
-            @Result(property = "userEmail", column = "user_email"),
-            @Result(property = "userPicHead", column = "user_pic_head") })
-	public User queryUserByEmailAndPassword(@Param("email") String email,@Param("password") String password);
-	
-	@Update("update user set user_password=#{password} WHERE user_email =#{email}")
-    void updateUserPasswordByEmail(String password, String email);
-	
-	@Update("update user set user_name=#{userName} WHERE user_id =#{userId}")
-	void updateNameById(int userId,String userName);
+			@Result(property = "userId", column = "user_id"),
+			@Result(property = "nickName", column = "nick_name"),
+			@Result(property = "userType", column = "user_type"),
+			@Result(property = "phoneNumber", column = "phone_number"),
+			@Result(property = "avatarUrl", column = "avatar_url") })
+	public Map<String, Object> getUserByUserId(String userId);
 	
 }
