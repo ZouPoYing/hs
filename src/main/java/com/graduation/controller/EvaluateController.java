@@ -52,14 +52,33 @@ public class EvaluateController {
     }
 
     // 获取评价
-    @RequestMapping("/getEvaluate")
-    public List<Map<String, Object>> getEvaluate(@RequestBody Map<String, String> params) throws Exception {
+    @RequestMapping("/getEvaluateByLimit")
+    public List<Map<String, Object>> getEvaluateByLimit(@RequestBody Map<String, String> params) throws Exception {
         String offset = params.get("offset");
         String rows = params.get("rows");
         if (offset.isEmpty() || rows.isEmpty()) {
             return null;
         }
         List<Map<String, Object>> result = evaluateService.getEvaluateByLimit(offset,rows);
+        return result;
+    }
+
+    // 获取评价
+    @RequestMapping("/getEvaluate")
+    public List<Map<String, Object>> getEvaluate() throws Exception {
+        return evaluateService.getEvaluate();
+    }
+
+    // 获取评价
+    @RequestMapping("/getEvaluateDeatilByEvaluateId")
+    public Map<String, Object> getEvaluateDeatilByEvaluateId(@RequestBody Map<String, String> params) throws Exception {
+        String evaluateId = params.get("evaluateId");
+        Map<String, Object> result = new HashMap<>();
+        if (evaluateId.isEmpty()) {
+            result.put("msg", Constants.Result.CSBNWK);
+            return result;
+        }
+        result = evaluateService.getEvaluateDeatilByEvaluateId(evaluateId);
         return result;
     }
 }

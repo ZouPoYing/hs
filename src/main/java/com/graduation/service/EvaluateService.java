@@ -22,4 +22,12 @@ public class EvaluateService {
         return evaluateMapper.getEvaluateByLimit(offset,rows);
     }
 
+    public List<Map<String, Object>> getEvaluate() {
+        return evaluateMapper.getEvaluate();
+    }
+
+    public Map<String, Object> getEvaluateDeatilByEvaluateId(String evaluateId) {
+        return evaluateMapper.getEvaluateDeatilByEvaluateId(evaluateId);
+    }
+
 }

@@ -11,7 +11,7 @@ public class Constants {
         public static final String URL = "http://localhost:9191/hs/";
 
         // 文件存储位置
-        public static final String PATH = "D:/IDEAProjects/hs/src/main/resources/static/";
+        public static final String PATH = "D:/IDEAProjects/hs/src/main/resources/static/";//"D:/IDEAProjects/file/";
 
         // 本地映射位置 如果没有热部署的话，新增的静态文件不能被访问，需要配置本地映射位置
         public static final String LOCALPATH = "file:D:\\IDEAProjects\\hs\\src\\main\\resources\\static\\";

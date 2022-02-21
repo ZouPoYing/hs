@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @MapperScan("com.graduation.mapper")
-//@ComponentScan(basePackages = { "**.controller" })
 public class HsApplication {
 
 	
