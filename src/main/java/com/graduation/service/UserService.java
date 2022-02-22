@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.graduation.domain.User;
 import com.graduation.mapper.UserMapper;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -43,4 +44,7 @@ public class UserService {
 		return mapper.getUserByUserId(userId);
 	}
 
+	public void setMoneyByUserId(String userId, BigDecimal money) {
+		mapper.setMoneyByUserId(userId,money);
+	}
 }

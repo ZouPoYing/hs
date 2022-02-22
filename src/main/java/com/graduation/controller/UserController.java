@@ -6,10 +6,13 @@ import com.graduation.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 //实现跨域注解
@@ -96,4 +99,31 @@ public class UserController {
 		return result;
 	}
 
+	// 充值
+	@RequestMapping("/recharge")
+	@ResponseBody
+	public Map<String, Object> recharge(@RequestBody Map<String, String> params) {
+		String userId = params.get("userId");
+		String money = params.get("money");
+		Map<String, Object> result = new HashMap<>();
+		if ((userId == null || userId.length() <= 0) || (money == null || money.length() <= 0)) {
+			result.put("msg", Constants.Result.CSBNWK);
+			return result;
+		}
+		String reg_money = "^(([1-9]{1}\\d*)|(0{1}))(\\.\\d{0,2})?$";// 金额正则,可以没有小数，小数最多不超过两位
+		Pattern pattern = Pattern.compile(reg_money);
+		Matcher matcher = pattern.matcher(money);
+		boolean ismatch = matcher.matches();
+		if (!ismatch) {
+			result.put("msg", Constants.Result.JEGSBZQ);
+			return result;
+		}
+		BigDecimal rechargeMoney = new BigDecimal(money);
+		Map<String, Object> user = userService.getUserByUserId(userId);
+		BigDecimal myMoney = new BigDecimal(user.get("money").toString());
+		BigDecimal newMoney = rechargeMoney.add(myMoney);
+		userService.setMoneyByUserId(userId,newMoney);
+		result.put("success", true);
+		return result;
+	}
 }

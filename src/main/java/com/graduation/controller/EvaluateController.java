@@ -79,6 +79,7 @@ public class EvaluateController {
             return result;
         }
         result = evaluateService.getEvaluateDeatilByEvaluateId(evaluateId);
+        result.put("success", true);
         return result;
     }
 }

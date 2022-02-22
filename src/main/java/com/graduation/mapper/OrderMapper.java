@@ -22,7 +22,7 @@ public interface OrderMapper {
     @Update("update hs.order set status=#{status} where order_id=#{orderId} ")
     public void setStatusByOrderId(Integer orderId,String status);
 
-    @Select("select barber.barber_name,barber.position,barber.barber_head,order.price,order.order_type,order.start_time,order.barber_id,order.user_id," +
+    @Select("select barber.barber_name,barber.position,barber.barber_head,order.price,order.order_type,order.start_time,order.barber_id,order.user_id,order.evaluate_id," +
             "order.order_id,order.end_time,order.pay_time from hs.order left join user on order.user_id=user.user_id left join barber on order.barber_id=barber.barber_id where " +
             "order.user_id = #{userId} and order.status = #{status} order by order.start_time desc")
     public List<Map<String, Object>> getOrderByUserIdAndStatus(String userId, String status);

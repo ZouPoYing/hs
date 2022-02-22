@@ -4,6 +4,7 @@ import com.graduation.domain.User;
 import org.apache.ibatis.annotations.*;
 import sun.reflect.generics.tree.VoidDescriptor;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -47,5 +48,7 @@ public interface UserMapper {
 			@Result(property = "phoneNumber", column = "phone_number"),
 			@Result(property = "avatarUrl", column = "avatar_url") })
 	public Map<String, Object> getUserByUserId(String userId);
-	
+
+	@Update("update user set money=#{money} WHERE user_id =#{userId}")
+	public void setMoneyByUserId(String userId,  BigDecimal money);
 }

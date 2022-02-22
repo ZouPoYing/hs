@@ -4,6 +4,7 @@ import com.graduation.bean.Constants;
 import com.graduation.domain.Order;
 import com.graduation.service.BarberService;
 import com.graduation.service.OrderService;
+import com.graduation.service.UserService;
 import com.graduation.util.MyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.thymeleaf.util.MapUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,6 +29,9 @@ public class OrderController {
 
     @Autowired
     private BarberService barberService;
+
+    @Autowired
+    private UserService userService;
 
     // 排队
     @RequestMapping("/insertOrder")
@@ -115,11 +120,21 @@ public class OrderController {
             result.put("msg", Constants.Result.CSBNWK);
             return result;
         }
-        orderService.setStatusAndPayTimeByOrderId(Integer.parseInt(orderId),Constants.StatusType.DPJ);
         Map<String, Object> order = orderService.getOrderByOrderId(orderId);
-        Map<String, Object> FirstLineOrder = orderService.getLineOrderByBarberIdAndLimitSub(order.get("barber_id").toString(),Constants.LimitSub.HQDYGPDDDD).get(0);
-        if (!MapUtils.isEmpty(FirstLineOrder)) {
-            orderService.setStatusByOrderId(Integer.valueOf(FirstLineOrder.get("order_id").toString()),Constants.StatusType.FWZ);
+        Map<String, Object> user = userService.getUserByUserId(order.get("user_id").toString());
+        BigDecimal payMoney = new BigDecimal(order.get("price").toString());
+        BigDecimal myMoney = new BigDecimal(user.get("money").toString());
+        if (payMoney.compareTo(myMoney) > 0) {
+            result.put("msg", Constants.Result.YEBZ);
+            return result;
+        }
+        orderService.setStatusAndPayTimeByOrderId(Integer.parseInt(orderId),Constants.StatusType.DPJ);
+        userService.setMoneyByUserId(user.get("userId").toString(),myMoney.subtract(payMoney));
+        List<Map<String, Object>> allLineOrder = orderService.getLineOrderByBarberIdAndLimitSub(order.get("barber_id").toString(),Constants.LimitSub.HQDYGPDDDD);
+        if (allLineOrder.size() != 0) {
+            if (!MapUtils.isEmpty(allLineOrder.get(0))) {
+                orderService.setStatusByOrderId(Integer.valueOf(allLineOrder.get(0).get("order_id").toString()),Constants.StatusType.FWZ);
+            }
         }
         result.put("success", true);
         return result;

@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 20/02/2022 20:08:55
+ Date: 22/02/2022 12:23:19
 */
 
 SET NAMES utf8mb4;
@@ -103,7 +103,7 @@ CREATE TABLE `evaluate`  (
   `img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '图片链接',
   `message` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '评价',
   PRIMARY KEY (`evaluate_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of evaluate
@@ -139,7 +139,7 @@ CREATE TABLE `file`  (
   `date` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '上传时间',
   `user_id` int(0) NULL DEFAULT NULL COMMENT '用户主键',
   PRIMARY KEY (`file_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 88 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 91 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of file
@@ -209,6 +209,9 @@ INSERT INTO `file` VALUES (84, '1_1645354592113_1645354592113.9j.jpg', '2022-02-
 INSERT INTO `file` VALUES (85, '1_1645354614596_1645354614596.9j.jpg', '2022-02-20 18:56:54', 1);
 INSERT INTO `file` VALUES (86, '1_1645354645228_1645354645228.9j.jpg', '2022-02-20 18:57:25', 1);
 INSERT INTO `file` VALUES (87, '1_1645354667997_1645354667997.9j.jpg', '2022-02-20 18:57:48', 1);
+INSERT INTO `file` VALUES (88, '1_1645417217761_1645417217761.ek0yGhlRdgkuiMqiIDo6DGoQkOPAqICDUTaZVicJafrVP+fPeY09TS91.png', '2022-02-21 12:20:17', 1);
+INSERT INTO `file` VALUES (89, '1_1645417410185_1645417410185.efk3nvzXsJdm2SwMqVK7epVqv.png', '2022-02-21 12:23:30', 1);
+INSERT INTO `file` VALUES (90, '1_1645417872636_1645417872636.933ZiZlJh0CBEIIEIp0qSqoIDaKXXH.png', '2022-02-21 12:31:13', 1);
 
 -- ----------------------------
 -- Table structure for order
@@ -234,6 +237,7 @@ CREATE TABLE `order`  (
 INSERT INTO `order` VALUES (6, 2, 3, 1, '完成', '108', '发型设计', '2022-02-19 18:47:00', '2022-02-20 13:23:06', '2022-02-20 02:38:00');
 INSERT INTO `order` VALUES (7, 3, 3, NULL, '服务中', '108', '发型设计', '2022-02-19 19:05:46', '2022-02-20 00:52:38', '2022-02-20 00:56:29');
 INSERT INTO `order` VALUES (8, 3, 3, NULL, '取消排队', '108', '发型设计', '2022-02-20 00:11:13', '2022-02-20 00:19:29', '2022-02-20 00:56:29');
+INSERT INTO `order` VALUES (9, 2, 1, NULL, '待评价', '68', '洗剪吹', '2022-02-22 08:11:13', NULL, '2022-02-22 08:27:27');
 
 -- ----------------------------
 -- Table structure for user
@@ -251,14 +255,15 @@ CREATE TABLE `user`  (
   `face` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '脸型',
   `job` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '职业',
   `education` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '学历',
+  `money` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '0' COMMENT '余额',
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES (1, '孤独的人总是晚归', '管理员', '1588643851', 'https://thirdwx.qlogo.cn/mmopen/vi_32/KgJSDhA6S2Lt0SmoJcoic141WBoXvsWw4vzAp04Seqh1HicLzaEQjpSsEMzicx1E0tD23jAv2Vp7ibKz6x3fZuUG1A/132', '女', '90后', '短发', '椭圆形', '程序员', '大专/本科');
-INSERT INTO `user` VALUES (2, 'Jack Sparrow', 'vip', '15886438518', 'http://localhost:9191/hs/jack.jpg', '男', '90后', '短发', '椭圆形', '程序员', '大专/本科');
-INSERT INTO `user` VALUES (3, 'Davy Jones', 'vip', '15886438511', 'http://localhost:9191/hs/davyjones(1).png', '男', '90后', '短发', '椭圆形', '程序员', '大专/本科');
+INSERT INTO `user` VALUES (1, '孤独的人总是晚归', '管理员', '15886438510', 'https://thirdwx.qlogo.cn/mmopen/vi_32/KgJSDhA6S2Lt0SmoJcoic141WBoXvsWw4vzAp04Seqh1HicLzaEQjpSsEMzicx1E0tD23jAv2Vp7ibKz6x3fZuUG1A/132', '女', '90后', '短发', '椭圆形', '程序员', '大专/本科', '0');
+INSERT INTO `user` VALUES (2, 'Jack Sparrow', 'vip', '15886438518', 'http://localhost:9191/hs/jack.jpg', '男', '90后', '短发', '椭圆形', '程序员', '大专/本科', '0.22');
+INSERT INTO `user` VALUES (3, 'Davy Jones', 'vip', '15886438511', 'http://localhost:9191/hs/davyjones(1).png', '男', '90后', '短发', '椭圆形', '程序员', '大专/本科', '0');
 
 SET FOREIGN_KEY_CHECKS = 1;

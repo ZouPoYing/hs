@@ -112,7 +112,7 @@ public class BarberController {
         List<Map<String, Object>> barbers = barberService.getWorkBarbers(MyUtil.matchSub(skill));
         List<Map<String, Object>> result = new ArrayList<>();
         for (Map<String, Object> barber : barbers ) {
-            String skillPrice = appService.getPriceById(MyUtil.matchAppId(barber.get("skill")));
+            String skillPrice = appService.getPriceById(MyUtil.matchAppId(skill));
             String positionPrice = appService.getPriceById(MyUtil.matchAppId(barber.get("position")));
             int line = orderService.getOrderCountByBarberIdAndStatusSub(barber.get("barber_id").toString(),Constants.StatusSub.LFSYDDZZJXZ);
             BigDecimal sPrice = new BigDecimal(skillPrice);

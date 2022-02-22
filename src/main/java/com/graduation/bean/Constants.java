@@ -169,11 +169,17 @@ public class Constants {
         // 参数不能为空
         public static final String CSBNWK = "参数不能为空";
 
+        // 金额格式不正确
+        public static final String JEGSBZQ = "金额格式不正确";
+
         // 理发师不在工作时间内
         public static final String LFSBZGZSJN = "理发师不在工作时间内";
 
         // 您有订单正在进行中
         public static final String NYDDZZJXZ = "您有订单正在进行中";
+
+        // 您的余额不足,请及时充值
+        public static final String YEBZ = "您的余额不足,请及时充值";
 
     }
 }
